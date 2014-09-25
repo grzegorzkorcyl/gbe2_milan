@@ -1,0 +1,190 @@
+
+########## CN_2_VIRTEX4 ###########
+##########
+# SFP 1
+#NET "fpga_1_sfp_a_cp_pin" IOSTANDARD = LVTTL;
+#NET "fpga_1_sfp_a_cp_pin" LOC = AK17;
+#NET "fpga_1_sfp_a_blue_pin" IOSTANDARD = LVTTL;
+#NET "fpga_1_sfp_a_blue_pin" LOC = AJ19;
+#NET "fpga_1_sfp_a_green_pin" IOSTANDARD = LVTTL;
+#NET "fpga_1_sfp_a_green_pin" LOC = AE16;
+#Net fpga_1_sfp_a_td_n_pin LOC = AP10;
+#Net fpga_1_sfp_a_td_p_pin LOC = AP9;
+#Net fpga_1_sfp_a_rd_n_pin LOC = AP7;
+#Net fpga_1_sfp_a_rd_p_pin LOC = AP6;
+#NET "GBE/sfp_gen.mac/gtp/mgt0_txoutclk1_i" TNM_NET = GBE/sfp_gen.mac/gtp/mgt0_txoutclk1_i;
+#TIMESPEC TS_GBE_sfp_gen_mac_gtp_mgt0_txoutclk1_i = PERIOD "GBE/sfp_gen.mac/gtp/mgt0_txoutclk1_i" 125 MHz HIGH 50%;
+#INST "*gtp_i/MGT0" LOC=GT11_X1Y1;
+#
+## SFP 2
+##NET "fpga_1_sfp_b_cp_pin" IOSTANDARD = LVTTL;
+##NET "fpga_1_sfp_b_cp_pin" LOC = AH20;
+##NET "fpga_1_sfp_b_blue_pin" IOSTANDARD = LVTTL;
+##NET "fpga_1_sfp_b_blue_pin" LOC = AG20;
+##NET "fpga_1_sfp_b_green_pin" IOSTANDARD = LVTTL;
+##NET "fpga_1_sfp_b_green_pin" LOC = AK19;
+##NET "GBE/mac/gtp/mgt0_txoutclk1_i" TNM_NET = GBE/mac/gtp/mgt0_txoutclk1_i;
+##TIMESPEC TS_GBE_mac_gtp_mgt0_txoutclk1_i = PERIOD "GBE/mac/gtp/mgt0_txoutclk1_i" 125 MHz HIGH 50%;
+##INST "*gtp_i/MGT0" LOC=GT11_X1Y1;
+#
+## Copper cable
+##Net fpga_0_Hard_Ethernet_MAC_TemacPhy_RST_n_pin LOC = AH5  |  TIG;
+##Net fpga_0_Hard_Ethernet_MAC_GMII_TXD_0_pin<0> LOC = AK4;
+##Net fpga_0_Hard_Ethernet_MAC_GMII_TXD_0_pin<1> LOC = AG5;
+##Net fpga_0_Hard_Ethernet_MAC_GMII_TXD_0_pin<2> LOC = AJ5;
+##Net fpga_0_Hard_Ethernet_MAC_GMII_TXD_0_pin<3> LOC = AE4;
+##Net fpga_0_Hard_Ethernet_MAC_GMII_TXD_0_pin<4> LOC = AF4;
+##Net fpga_0_Hard_Ethernet_MAC_GMII_TXD_0_pin<5> LOC = AF5;
+##Net fpga_0_Hard_Ethernet_MAC_GMII_TXD_0_pin<6> LOC = AF3;
+##Net fpga_0_Hard_Ethernet_MAC_GMII_TXD_0_pin<7> LOC = AE3;
+##Net fpga_0_Hard_Ethernet_MAC_GMII_TX_EN_0_pin  LOC = AK3;
+##Net fpga_0_Hard_Ethernet_MAC_GMII_TX_ER_0_pin  LOC = AH4;
+##Net fpga_0_Hard_Ethernet_MAC_GMII_TX_CLK_0_pin LOC = AL4;
+##Net fpga_0_Hard_Ethernet_MAC_GMII_RXD_0_pin<0> LOC = AJ6;
+##Net fpga_0_Hard_Ethernet_MAC_GMII_RXD_0_pin<1> LOC = AM3;
+##Net fpga_0_Hard_Ethernet_MAC_GMII_RXD_0_pin<2> LOC = AL3;
+##Net fpga_0_Hard_Ethernet_MAC_GMII_RXD_0_pin<3> LOC = AK6;
+##Net fpga_0_Hard_Ethernet_MAC_GMII_RXD_0_pin<4> LOC = AM5;
+##Net fpga_0_Hard_Ethernet_MAC_GMII_RXD_0_pin<5> LOC = AL5;
+##Net fpga_0_Hard_Ethernet_MAC_GMII_RXD_0_pin<6> LOC = AL6;
+##Net fpga_0_Hard_Ethernet_MAC_GMII_RXD_0_pin<7> LOC = AM6;
+##Net fpga_0_Hard_Ethernet_MAC_GMII_RX_DV_0_pin  LOC = AG6;
+##Net fpga_0_Hard_Ethernet_MAC_GMII_RX_ER_0_pin  LOC = AJ4;
+##Net fpga_0_Hard_Ethernet_MAC_GMII_RX_CLK_0_pin LOC = H18;
+##NET "*tx_gmii_mii_clk_in_0_i"    TNM_NET = "clk_phy_tx_clk0";
+##TIMESPEC "TS_phy_tx_clk0"        = PERIOD "clk_phy_tx_clk0" 7400 ps HIGH 50 %;
+##NET "*gmii_rx_clk_0_i"           TNM_NET = "clk_phy_rx_clk0";
+##TIMESPEC "TS_phy_rx_clk0"        = PERIOD "clk_phy_rx_clk0" 7200 ps HIGH 50 %;
+##INST *gmii_rx_clk_0_dcm          CLKOUT_PHASE_SHIFT = FIXED;
+##INST *gmii_rx_clk_0_dcm          PHASE_SHIFT = -240;
+##INST *gmii_rx_clk_0_dcm          DESKEW_ADJUST = SOURCE_SYNCHRONOUS;
+##INST *gmii_rx_clk_0_dcm          LOC = DCM_ADV_X0Y7;
+##Net fpga_0_Hard_Ethernet_MAC_GMII_RX_CLK_0_pin CLOCK_DEDICATED_ROUTE = FALSE;
+##NET "fpga_1_phy_125_clk_pin" CLOCK_DEDICATED_ROUTE = FALSE;
+##NET "fpga_0_Hard_Ethernet_MAC_GMII_RX_CLK_0_pin" TNM_NET = fpga_0_Hard_Ethernet_MAC_GMII_RX_CLK_0_pin;
+##TIMESPEC TS_fpga_0_Hard_Ethernet_MAC_GMII_RX_CLK_0_pin = PERIOD "fpga_0_Hard_Ethernet_MAC_GMII_RX_CLK_0_pin" 125 MHz HIGH 50%;
+##NET "GBE/copper_gen.mac/tx_gmii_mii_clk_out_0_i" TNM_NET = GBE/copper_gen.mac/tx_gmii_mii_clk_out_0_i;
+##TIMESPEC TS_GBE_copper_gen_mac_tx_gmii_mii_clk_out_0_i = PERIOD "GBE/copper_gen.mac/tx_gmii_mii_clk_out_0_i" 125 MHz HIGH 50%;
+##INST "*gmii0?RXD_TO_MAC*"    IOB = true;
+##INST "*gmii0?RX_DV_TO_MAC"   IOB = true;
+##INST "*gmii0?RX_ER_TO_MAC"   IOB = true;
+##INST "fpga_0_Hard_Ethernet_MAC_GMII_RXD_0_pin<0>" TNM = gmii_rxd;
+##INST "fpga_0_Hard_Ethernet_MAC_GMII_RXD_0_pin<1>" TNM = gmii_rxd;
+##INST "fpga_0_Hard_Ethernet_MAC_GMII_RXD_0_pin<2>" TNM = gmii_rxd;
+##INST "fpga_0_Hard_Ethernet_MAC_GMII_RXD_0_pin<3>" TNM = gmii_rxd;
+##INST "fpga_0_Hard_Ethernet_MAC_GMII_RXD_0_pin<4>" TNM = gmii_rxd;
+##INST "fpga_0_Hard_Ethernet_MAC_GMII_RXD_0_pin<5>" TNM = gmii_rxd;
+##INST "fpga_0_Hard_Ethernet_MAC_GMII_RXD_0_pin<6>" TNM = gmii_rxd;
+##INST "fpga_0_Hard_Ethernet_MAC_GMII_RXD_0_pin<7>" TNM = gmii_rxd;
+##INST "fpga_0_Hard_Ethernet_MAC_GMII_RX_DV_0_pin" TNM = gmii_rxd;
+##INST "fpga_0_Hard_Ethernet_MAC_GMII_RX_ER_0_pin" TNM = gmii_rxd;
+##TIMEGRP "gmii_rxd" OFFSET = IN 2 ns VALID 2 ns BEFORE "fpga_0_Hard_Ethernet_MAC_GMII_RX_CLK_0_pin";
+#
+## general
+#NET "fpga_1_phy_125_clk_pin" IOSTANDARD = LVCMOS25;
+#NET "fpga_1_phy_125_clk_pin" LOC = AH3;
+#NET "fpga_1_40_clk_n_pin" LOC = K17;
+#NET "fpga_1_40_clk_p_pin" LOC = K18;
+#
+#INST "*v4_emac"  LOC = "EMAC_X0Y0";
+#
+#Net fpga_0_clk_1_sys_clk_pin TNM_NET = sys_clk_pin;
+#TIMESPEC TS_sys_clk_pin = PERIOD sys_clk_pin 100000 kHz;
+#Net fpga_0_clk_1_sys_clk_pin LOC = H17  |IOSTANDARD = LVCMOS25;
+#Net fpga_0_rst_1_sys_rst_pin TIG;
+#Net fpga_0_rst_1_sys_rst_pin LOC = AH18  |IOSTANDARD = LVTTL;
+#NET "fpga_1_phy_125_clk_pin" TNM_NET = fpga_1_phy_125_clk_pin;
+#TIMESPEC TS_fpga_1_phy_125_clk_pin = PERIOD "fpga_1_phy_125_clk_pin" 125 MHz HIGH 50%;
+
+##########
+########## END OF CN_2_VIRTEX4 ###########
+
+
+########## CN_3_VIRTEX5 ###########
+##########
+
+#SFP1, comment Copper below
+NET "fpga_0_rst_1_sys_rst_pin" LOC = AH8;
+NET "fpga_1_sfp_a_rd_p_pin" LOC = N1;
+NET "fpga_1_sfp_a_rd_n_pin" LOC = P1;
+NET "fpga_1_sfp_a_td_p_pin" LOC = M2;
+NET "fpga_1_sfp_a_td_n_pin" LOC = N2;
+NET "fpga_1_sfp_b_rd_p_pin" LOC = T1;
+NET "fpga_1_sfp_b_rd_n_pin" LOC = R1;
+NET "fpga_1_sfp_b_td_p_pin" LOC = U2;
+NET "fpga_1_sfp_b_td_n_pin" LOC = T2;
+NET "fpga_1_phy_125_clk_pin" CLOCK_DEDICATED_ROUTE = FALSE;
+NET "fpga_1_phy_125_clk_pin" LOC = F6;
+
+
+NET "fpga_0_sfp_a_rd_p_pin" LOC = W1;
+NET "fpga_0_sfp_a_rd_n_pin" LOC = Y1;
+NET "fpga_0_sfp_a_td_p_pin" LOC = V2;
+NET "fpga_0_sfp_a_td_n_pin" LOC = W2;
+NET "fpga_0_sfp_b_rd_p_pin" LOC = AB1;
+NET "fpga_0_sfp_b_rd_n_pin" LOC = AA1;
+NET "fpga_0_sfp_b_td_p_pin" LOC = AC2;
+NET "fpga_0_sfp_b_td_n_pin" LOC = AB2;
+
+#INST "v5_emac_block_inst/GTX_DUAL_1000X_inst/GTX_1000X/tile0_rocketio_wrapper_gtx_i/gtx_dual_i" LOC = GTX_DUAL_X0Y4;
+#NET "fpga_1_phy_125_clk_pin" TNM_NET = "fpga_1_phy_125_clk_pin";
+#TIMESPEC TS_fpga_1_phy_125_clk_pin = PERIOD "fpga_1_phy_125_clk_pin" 125 MHz HIGH 50 %;
+#INST "v5_emac_block_inst/v5_emac_wrapper_inst/v5_emac" LOC = TEMAC_X0Y0;
+#NET "v5_clk_125" TNM_NET = v5_clk_125;
+#TIMESPEC TS_v5_clk_125 = PERIOD "v5_clk_125" 125 MHz HIGH 50%;
+#NET "clk62_5_pre_bufg" TNM_NET = clk62_5_pre_bufg;
+#TIMESPEC TS_clk62_5_pre_bufg = PERIOD "clk62_5_pre_bufg" 62.5 MHz HIGH 50%;
+#INST "clk62_5_dcm" DLL_FREQUENCY_MODE = "HIGH";
+
+#NET "fpga_1_sfp_a_rd_p_pin" LOC = W1;
+#NET "fpga_1_sfp_a_rd_n_pin" LOC = Y1;
+#NET "fpga_1_sfp_a_td_p_pin" LOC = V2;
+#NET "fpga_1_sfp_a_td_n_pin" LOC = W2;
+#INST "GBE2/v5_gen.sfp_gen.mac/GTX_DUAL_1000X_inst/GTX_1000X/tile0_rocketio_wrapper_gtx_i/gtx_dual_i" LOC = GTX_DUAL_X0Y5;
+#INST "GBE2/v5_gen.sfp_gen.mac/v5_emac_wrapper_inst/v5_emac" LOC = TEMAC_X0Y1;
+#NET "GBE2/v5_clk_125" TNM_NET = GBE/v5_clk_125;
+#TIMESPEC TS_GBE_v5_clk_125 = PERIOD "GBE2/v5_clk_125" 125 MHz HIGH 50%;
+#NET "GBE2/clk62_5_pre_bufg" TNM_NET = GBE2/clk62_5_pre_bufg;
+#TIMESPEC TS_GBE_clk62_5_pre_bufg = PERIOD "GBE2/clk62_5_pre_bufg" 62.5 MHz HIGH 50%;
+#INST "GBE2/implementation_gen.v5_clk_gen.sfp_clk_gen.clk62_5_dcm" DLL_FREQUENCY_MODE = "HIGH";
+
+# Copper cable, comment SFP1 above
+NET fpga_0_Hard_Ethernet_MAC_TemacPhy_RST_n_pin	LOC=G7; #E6	|TIG;	# Bank 12	PHY_RESET_N
+NET fpga_0_Hard_Ethernet_MAC_GMII_RXD_0_pin<0>	LOC=R6;	# Bank 12	PHY_RXD0
+NET fpga_0_Hard_Ethernet_MAC_GMII_RXD_0_pin<1>	LOC=N7;	# Bank 12	PHY_RXD1
+NET fpga_0_Hard_Ethernet_MAC_GMII_RXD_0_pin<2>	LOC=P7;	# Bank 12	PHY_RXD2
+NET fpga_0_Hard_Ethernet_MAC_GMII_RXD_0_pin<3>	LOC=R7;	# Bank 12	PHY_RXD3
+NET fpga_0_Hard_Ethernet_MAC_GMII_RXD_0_pin<4>	LOC=T8;	# Bank 12	PHY_RXD4
+NET fpga_0_Hard_Ethernet_MAC_GMII_RXD_0_pin<5>	LOC=P5;	# Bank 12	PHY_RXD5
+NET fpga_0_Hard_Ethernet_MAC_GMII_RXD_0_pin<6>	LOC=T6;	# Bank 12	PHY_RXD6
+NET fpga_0_Hard_Ethernet_MAC_GMII_RXD_0_pin<7>	LOC=P10;	# Bank 12	PHY_RXD7
+NET fpga_0_Hard_Ethernet_MAC_GMII_RX_CLK_0_pin	LOC=H17; #  |CLOCK_DEDICATED_ROUTE = FALSE;	# Bank 4	PHY_RX_CLK
+NET fpga_0_Hard_Ethernet_MAC_GMII_RX_DV_0_pin	LOC=N5;	# Bank 12	PHY_RX_DV
+NET fpga_0_Hard_Ethernet_MAC_GMII_RX_ER_0_pin	LOC=P6;	# Bank 12	PHY_RX_ER
+NET fpga_0_Hard_Ethernet_MAC_GMII_TXD_0_pin<0>	LOC=L4;	# Bank 12	PHY_TXD0
+NET fpga_0_Hard_Ethernet_MAC_GMII_TXD_0_pin<1>	LOC=K6;	# Bank 12	PHY_TXD1
+NET fpga_0_Hard_Ethernet_MAC_GMII_TXD_0_pin<2>	LOC=M7;	# Bank 12	PHY_TXD2
+NET fpga_0_Hard_Ethernet_MAC_GMII_TXD_0_pin<3>	LOC=J6;	# Bank 12	PHY_TXD3
+NET fpga_0_Hard_Ethernet_MAC_GMII_TXD_0_pin<4>	LOC=L5;	# Bank 12	PHY_TXD4
+NET fpga_0_Hard_Ethernet_MAC_GMII_TXD_0_pin<5>	LOC=K7;	# Bank 12	PHY_TXD5
+NET fpga_0_Hard_Ethernet_MAC_GMII_TXD_0_pin<6>	LOC=J5;	# Bank 12	PHY_TXD6
+NET fpga_0_Hard_Ethernet_MAC_GMII_TXD_0_pin<7>	LOC=G6;	# Bank 12	PHY_TXD7
+NET fpga_0_Hard_Ethernet_MAC_GMII_TX_CLK_0_pin	LOC=H19; #  |CLOCK_DEDICATED_ROUTE = FALSE;	# Bank 12	PHY_GTX_CLK
+NET fpga_0_Hard_Ethernet_MAC_GMII_TX_EN_0_pin	LOC=M5;	# Bank 12	PHY_TX_EN
+NET fpga_0_Hard_Ethernet_MAC_GMII_TX_ER_0_pin	LOC=L6;	# Bank 12	PHY_TX_ER
+#NET "fpga_1_phy_125_clk_pin" CLOCK_DEDICATED_ROUTE = FALSE; 
+#NET "fpga_1_phy_125_clk_pin" LOC = F6; # Bank 12	PHY_125CLK
+#
+#NET "fpga_1_phy_125_clk_pin" TNM_NET = fpga_1_phy_125_clk_pin;
+#TIMESPEC TS_fpga_1_phy_125_clk_pin = PERIOD "fpga_1_phy_125_clk_pin" 125 MHz HIGH 50%;
+#
+#####INST "transceivers/copper_mac/v5_emac_wrapper_inst/v5_emac" LOC = TEMAC_X0Y1;
+
+INST "transceivers/v5_emac_block_inst_1/v5_emac_wrapper_inst/v5_emac" LOC = TEMAC_X0Y1;
+INST "transceivers/v5_emac_block_inst_2/v5_emac_wrapper_inst/v5_emac" LOC = TEMAC_X0Y0;
+#
+NET "fpga_0_Hard_Ethernet_MAC_GMII_RX_CLK_0_pin" TNM_NET = fpga_0_Hard_Ethernet_MAC_GMII_RX_CLK_0_pin;
+TIMESPEC TS_fpga_0_Hard_Ethernet_MAC_GMII_RX_CLK_0_pin = PERIOD "fpga_0_Hard_Ethernet_MAC_GMII_RX_CLK_0_pin" 125 MHz HIGH 50%;
+
+##########
+########## END OF CN_3_VIRTEX5 ###########
