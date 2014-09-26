@@ -104,6 +104,7 @@ signal wrong_checksum : std_logic;
 
 
 attribute keep of frames_counter, packets_counter, fifo_full, fifo_empty, valid_checksums, wrong_checksum, wrong_checksums_ctr : signal is "true";
+signal fifo_rd_en_q, fifo_rd_en_qq : std_logic;
 
 begin
 
@@ -118,7 +119,7 @@ begin
 	end if;
 end process DISSECT_MACHINE_PROC;
 
-DISSECT_MACHINE : process(dissect_current_state, prep_cs_ctr, loaded_ctr, data_length, PS_MY_IP_IN, PS_WR_EN_IN, PS_ACTIVATE_IN, fifo_data, PS_SELECTED_IN, PS_FO_IP_IN)
+DISSECT_MACHINE : process(dissect_current_state, prep_cs_ctr, loaded_ctr, data_length, PS_WR_EN_IN, PS_ACTIVATE_IN, fifo_data, PS_FO_IP_IN, LL_UDP_OUT_DST_READY_N_IN, padding)
 begin
 	case dissect_current_state is
 	
@@ -141,7 +142,7 @@ begin
 				dissect_next_state <= IDLE;
 			else
 				if (data_length(1 downto 0) = "00") then
-					dissect_next_state <= PREP_CHECKSUM; --WAIT_FOR_LOAD;
+					dissect_next_state <= PREP_CHECKSUM;
 				else
 					dissect_next_state <= ADD_PADDING;
 				end if;
@@ -149,7 +150,7 @@ begin
 						
 		when ADD_PADDING =>
 			if (padding = "0001") then
-				dissect_next_state <= PREP_CHECKSUM; --WAIT_FOR_LOAD;
+				dissect_next_state <= PREP_CHECKSUM;
 			else
 				dissect_next_state <= ADD_PADDING;
 			end if;
@@ -182,7 +183,7 @@ begin
 	end case;
 end process DISSECT_MACHINE;
 
-fifo : fifo_65536x8x32 --2048x8x32
+fifo : fifo_65536x8x32
   PORT map(
     rst     => RESET,
     wr_clk  => CLK,
@@ -217,6 +218,10 @@ end process FIFO_WR_PROC;
 FIFO_RD_PROC : process(CLK)
 begin
 	if rising_edge(CLK) then
+		
+		fifo_rd_en_q <= fifo_rd_en;
+		fifo_rd_en_qq <= fifo_rd_en_q;
+		
 		if (LL_UDP_OUT_DST_READY_N_IN = '0') then
 			if ((dissect_current_state = LOAD_DATA) or (dissect_current_state = WAIT_FOR_LOAD)) then
 				if (data_length /= loaded_ctr) then
@@ -277,19 +282,46 @@ begin
 	if rising_edge(CLK) then
 		LL_UDP_OUT_DATA_OUT <= fifo_q;
 		
-		if (dissect_current_state = WAIT_FOR_LOAD or dissect_current_state = LOAD_DATA) then
+--		if (LL_UDP_OUT_DST_READY_N_IN = '0') then
+--			if (dissect_current_state = WAIT_FOR_LOAD or dissect_current_state = LOAD_DATA) then
+--				if ((data_length /= loaded_ctr) and loaded_ctr = 0) then
+--					LL_UDP_OUT_SOF_N_OUT <= '0';
+--					LL_UDP_OUT_SRC_READY_N_OUT <= '0';
+--				elsif (data_length /= loaded_ctr) then
+--					LL_UDP_OUT_SRC_READY_N_OUT <= '0';
+--					LL_UDP_OUT_SOF_N_OUT <= '1';
+--				else
+--					LL_UDP_OUT_SRC_READY_N_OUT <= '1';
+--					LL_UDP_OUT_SOF_N_OUT <= '1';
+--				end if;
+--			else
+--				LL_UDP_OUT_SRC_READY_N_OUT <= '1';
+--				LL_UDP_OUT_SOF_N_OUT <= '1';
+--			end if;
+--		else
+--			LL_UDP_OUT_SRC_READY_N_OUT <= '1';
+--			LL_UDP_OUT_SOF_N_OUT <= '1';
+--		end if;
+
+		if (fifo_rd_en_q = '1') then
 			LL_UDP_OUT_SRC_READY_N_OUT <= '0';
 		else
 			LL_UDP_OUT_SRC_READY_N_OUT <= '1';
 		end if;
 		
-		if (dissect_current_state = WAIT_FOR_LOAD and LL_UDP_OUT_DST_READY_N_IN = '0') then
+		if (fifo_rd_en_q = '1' and loaded_ctr = x"0008") then
 			LL_UDP_OUT_SOF_N_OUT <= '0';
 		else
 			LL_UDP_OUT_SOF_N_OUT <= '1';
 		end if;
 		
-		if (dissect_current_state = LOAD_DATA and (loaded_ctr = data_length or loaded_ctr > data_length)) then
+--		if (dissect_current_state = WAIT_FOR_LOAD and LL_UDP_OUT_DST_READY_N_IN = '0') then
+--			LL_UDP_OUT_SOF_N_OUT <= '0';
+--		else
+--			LL_UDP_OUT_SOF_N_OUT <= '1';
+--		end if;
+		
+		if (dissect_current_state = CLEANUP) then
 			LL_UDP_OUT_EOF_N_OUT <= '0';
 		else
 			LL_UDP_OUT_EOF_N_OUT <= '1';
@@ -305,7 +337,7 @@ begin
 end process SYNC_OUT;
 
 LL_UDP_OUT_WRITE_CLK_OUT <= CLK;
-LL_UDP_OUT_REM_OUT       <= b"11";
+LL_UDP_OUT_REM_OUT       <= b"00";
 
 --*********
 -- CHECKSUM

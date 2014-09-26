@@ -24,7 +24,7 @@ constant c_SIMULATE           : integer range 0 to 1 := 0;
 -- 6. DataRX
 
 constant c_MAX_FRAME_TYPES    : integer range 1 to 16 := 2;
-constant c_MAX_PROTOCOLS      : integer range 1 to 16 := 3;
+constant c_MAX_PROTOCOLS      : integer range 1 to 16 := 4;
 constant c_MAX_IP_PROTOCOLS   : integer range 1 to 16 := 3;
 constant c_MAX_UDP_PROTOCOLS  : integer range 1 to 16 := 3;
 constant c_MAX_TCP_PROTOCOLS  : integer range 1 to 16 := 2;

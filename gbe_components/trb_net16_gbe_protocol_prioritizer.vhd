@@ -60,8 +60,8 @@ begin
 							CODE_OUT <= (others => '0');
 						end if;
 					-- No. 3 = ICMP 
---					elsif (PROTOCOL_CODE_IN = x"01") then -- ICMP
---						CODE_OUT(2) <= '1';
+					elsif (PROTOCOL_CODE_IN = x"01") then -- ICMP
+						CODE_OUT(3) <= '1';
 --					elsif (PROTOCOL_CODE_IN = x"06") then -- TCP
 --						-- No. 4 = TcpForward
 --						CODE_OUT(3) <= '1';						

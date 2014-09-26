@@ -144,7 +144,6 @@ signal tc_data                 : std_logic_vector(8 downto 0);
 signal udp_checksum            : std_logic_vector(31 downto 0);
 signal prep_cs_ctr             : std_logic_vector(3 downto 0);
 signal udp_checksum_right      : std_logic_vector(15 downto 0);
-signal tx_fifo_wr_q            : std_logic;
 
 begin
 
@@ -183,7 +182,7 @@ PORT map(
 	wr_clk           => CLK,
 	rd_clk           => CLK,
 	din              => local_ll_data_q,
-	wr_en            => tx_fifo_wr_q,
+	wr_en            => tx_fifo_wr,
 	rd_en            => tx_fifo_rd,
 	dout             => tx_fifo_q,
 	full             => tx_full,
@@ -197,19 +196,17 @@ begin
 		if (local_ll_src_ready = '1' and local_ll_dst_ready_q = '1') then
 			if (dissect_current_state = SAVE_DATA) then
 				tx_fifo_wr <= '1';
-			--elsif (dissect_current_state = PREP_CHECKSUM and local_ll_sof = '1') then
-			--	tx_fifo_wr <= '1';
+			elsif (dissect_current_state = PREP_CHECKSUM and prep_cs_ctr = x"7") then
+				tx_fifo_wr <= '1';
 			else
 				tx_fifo_wr <= '0';
 			end if;
 		else
 			tx_fifo_wr <= '0';
 		end if;
-		
-		tx_fifo_wr_q <= tx_fifo_wr;
 	end if;
 end process FIFO_WR_PROC;
---tx_fifo_wr     <= '1' when (((dissect_current_state = SAVE_DATA) or (dissect_current_state = IDLE and local_ll_sof = '1')) and local_ll_src_ready = '1' and local_ll_dst_ready_q = '1') else '0';
+
 TX_FIFO_RESET_PROC : process(CLK)
 begin
 	if rising_edge(CLK) then
@@ -371,7 +368,7 @@ begin
 	end if;
 end process DISSECT_MACHINE_PROC;
 
-DISSECT_MACHINE : process(dissect_current_state, prep_cs_ctr, local_ll_src_ready, local_ll_sof, local_ll_eof, too_much_data, PS_SELECTED_IN, tx_loaded_ctr, tx_data_ctr, tx_frame_loaded)
+DISSECT_MACHINE : process(dissect_current_state, prep_cs_ctr, local_ll_src_ready, local_ll_sof, local_ll_eof, too_much_data, PS_SELECTED_IN, tx_loaded_ctr, tx_data_ctr)
 begin
 	case dissect_current_state is
 	

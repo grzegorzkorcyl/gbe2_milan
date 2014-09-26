@@ -115,9 +115,7 @@ port map(
 
 reset_prioritizer <= '1' when load_current_state = IDLE else '0';
 
---RC_FRAME_PROTO_OUT <= proto_code when (and_all(proto_code) = '0') else (others => '0');
---RC_FRAME_PROTO_OUT <= proto_code when RC_REDIRECT_TRAFFIC_IN = '0' else b"01000";  -- no more ones as the incorrect value, last slot for Trash
-RC_FRAME_PROTO_OUT <= proto_code when RC_REDIRECT_TRAFFIC_IN = '0' else b"000";  -- no more ones as the incorrect value, last slot for Trash
+RC_FRAME_PROTO_OUT <= proto_code when RC_REDIRECT_TRAFFIC_IN = '0' else b"0000";  -- no more ones as the incorrect value, last slot for Trash
 
 DEBUG_OUT(3 downto 0)   <= state;
 DEBUG_OUT(11 downto 4)  <= frames_received_ctr(7 downto 0);
